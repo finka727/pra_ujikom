@@ -1,0 +1,115 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="card">
+                                            <div class="card-header"><?php echo isset($_GET['edit']) ? 'Edit' : 'Tambah' ?> Transaksi</div>
+                                            <div class="card-body">
+                                                <?php if (isset($_GET['hapus'])): ?>
+                                                    <div class="alert alert-success" role="alert">Data berhasil dihapus</div>
+                                                <?php endif ?>
+
+                                                <div class="mb-3 row">
+                                                    <div class="col-sm-6">
+                                                        <label for="" class="form-label">Nama Customer</label>
+                                                        <select name="id_customer" id="" class="form-control">
+                                                            <option value="">pilih customer</option>
+                                                            <?php while ($resultCustomer = mysqli_fetch_assoc($dataCustomer)) : ?>
+                                                                <option value="<?= $resultCustomer['id'] ?>">
+                                                                    <?= $resultCustomer['customer_name'] ?>
+                                                                </option>
+                                                            <?php endwhile ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label for="" class="form-label">Kode Order</label>
+                                                        <input type="text"
+                                                            class="form-control"
+                                                            name="order_code"
+                                                            value="#<?php echo $code ?>"
+                                                            readonly>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label for="" class="form-label">Tanggal Order</label>
+                                                        <input type="date"
+                                                            class="form-control"
+                                                            name="order_date"
+                                                            placeholder=""
+                                                            value="<?php echo isset($_GET['edit']) ? $rowDataTransaksi['order_date'] : '' ?>"
+                                                            required>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label for="" class="form-label">Tanggal Selesai Order</label>
+                                                        <input type="date"
+                                                            class="form-control"
+                                                            name="order_end_date"
+                                                            placeholder=""
+                                                            value="<?php echo isset($_GET['edit']) ? $rowDataTransaksi['order_end_date'] : '' ?>"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="card">
+                                            <div class="card-header">Detail Transaksi</div>
+                                            <div class="card-body">
+                                                <?php if (isset($_GET['hapus'])): ?>
+                                                    <div class="alert alert-success" role="alert">Data berhasil dihapus</div>
+                                                <?php endif ?>
+
+                                                <div class="mb-3 row">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">Paket</label>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <select class="form-control" name="id_paket[]" id="">
+                                                            <option value="">--pilih paket--</option>
+                                                            <?php foreach ($rowPaket as $key => $value) { ?>
+                                                                <option value="<?php echo $value['id'] ?>"><?php echo $value['nama_paket'] ?></option>
+                                                            <?php  } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">Qty</label>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <input type="number" name="qty[]" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">Paket</label>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <select class="form-control" name="id_paket[]" id="">
+                                                            <option value="">--pilih paket--</option>
+                                                            <?php foreach ($rowPaket as $key => $value) { ?>
+                                                                <option value="<?php echo $value['id'] ?>"><?php echo $value['nama_paket'] ?></option>
+                                                            <?php  } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <div class="col-sm-3">
+                                                        <label for="" class="form-label">Qty</label>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <input type="number" name="qty[]" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <button class="btn btn-primary" name="<?php echo isset($_GET['edit']) ? 'edit' : 'simpan' ?>" type="submit">
+                                                        Simpan
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
