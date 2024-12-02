@@ -63,15 +63,17 @@
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
         <li class="menu-item active">
-            <a href="index.html" class="menu-link">
+            <a href="index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
         <!-- Layouts -->
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Pages</span>
+            <span class="menu-header-text">Data</span>
         </li>
+
+        <?php if ($_SESSION['id_level'] == 1): ?>
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -121,6 +123,36 @@
                         <div data-i18n="Basic">Laporan</div>
                     </a>
                 </li>
+            </ul>
+        </li>
+        <?php endif ?>
+
+        <?php if ($_SESSION['id_level'] == 2): ?>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div data-i18n="Authentications">Transaksi</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="data-transaksi.php" class="menu-link">
+                        <div data-i18n="Basic">Data Transaksi</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="transaksi-pengambilan.php" class="menu-link">
+                        <div data-i18n="Basic">Pengambilan</div>
+                    </a>
+                </li>
+                <?php endif ?>
+
+                <?php if ($_SESSION['id_level'] == 3): ?>
+                <li class="menu-item">
+                    <a href="laporan.php" class="menu-link">
+                        <div data-i18n="Basic">Laporan</div>
+                    </a>
+                </li>
+                <?php endif ?>
             </ul>
         </li>
 </aside>

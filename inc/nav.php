@@ -1,4 +1,34 @@
-<nav
+<?php
+
+include 'koneksi.php';
+
+if (!isset($_SESSION['id'])) {
+    die("Session ID is not set.");
+}
+
+
+$id = $_SESSION['id'];
+
+
+$queryLogin = mysqli_query($koneksi, "
+    SELECT user.*, level.level_name 
+    FROM user 
+    LEFT JOIN level ON user.id_level = level.id 
+    WHERE user.id = '$id'
+");
+
+if ($queryLogin) {
+    $rowLoginUser = mysqli_fetch_assoc($queryLogin);
+
+    // $_SESSION['foto'] = $rowLoginUser['foto'];
+    $_SESSION['level_name'] = isset($rowLoginUser['level_name']) ? $rowLoginUser['level_name'] : 'No level found';
+} else {
+    
+    echo "Query Error: " . mysqli_error($koneksi);
+}
+?>          
+         
+          <nav
             class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
             id="layout-navbar">
             <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
@@ -53,8 +83,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-semibold d-block"><?php echo isset($_SESSION['name']) ? $_SESSION['name'] : '' ?></span>
+                            <small class="text-muted"><?php echo isset($_SESSION['level_name']) ? $_SESSION['level_name'] : '' ?></small>
                           </div>
                         </div>
                       </a>

@@ -80,7 +80,7 @@ if (isset($_GET['delete'])) {
                                             <div class="alert alert-success" role="alert">Data berhasil dihapus</div>
                                         <?php endif ?>
                                         <div align="right" class="mb-3">
-                                            <a href="tambah-transaksi-pengambilan.php" class="btn btn-primary">Tambah</a>
+                                            <a href="tambah-data-transaksi.php" class="btn btn-primary">Tambah</a>
                                         </div>
                                         <table class="table table-bordered">
                                             <thead>

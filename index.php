@@ -1,9 +1,6 @@
 <?php
-session_start();
-// $idLevel = $_SESSION['name'];
-// print_r($idLevel);
-// die;
 
+session_start();
 ?>
 
 <!DOCTYPE html>
