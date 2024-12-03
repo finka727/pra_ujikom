@@ -2,7 +2,7 @@
 $host_koneksi = "localhost";
 $username_koneksi = "root";
 $password_koneksi = "";
-$database_koneksi = "pra_laundry";
+$database_koneksi = "laundry";
 
 $koneksi = mysqli_connect($host_koneksi, $username_koneksi, $password_koneksi, $database_koneksi);
 

@@ -113,3 +113,40 @@
                                 </div>
                             </form>
                         </div>
+
+
+// jika button simpan ditekan
+if (isset($_POST['simpan'])) {
+    $name = $_POST['name'];
+    $id_level = $_POST['id_level'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $insert = mysqli_query($koneksi, "INSERT INTO user (name, id_level, email, password) VALUES ('$name','$id_level','$email','$password')");
+
+    header("location:user.php?tambah=berhasil");
+}
+
+$id = isset($_GET['edit']) ? $_GET['edit'] : '';
+$queryEdit = mysqli_query($koneksi, "SELECT * FROM user WHERE id ='$id'");
+$rowEdit = mysqli_fetch_assoc($queryEdit);
+
+//jika button edit di klik
+if (isset($_POST['edit'])) {
+    $name = $_POST['name'];
+    $id_level = $_POST['id_level'];
+    $email = $_POST['email'];
+
+    //jika password di isi sama user 
+    if ($_POST['password']) {
+        $password = $_POST['password'];
+    } else {
+        $password = $rowEdit['password'];
+    }
+
+    $update = mysqli_query($koneksi, "UPDATE user SET name='$name',id_level='$id_level',email='$email',password='$password' WHERE id='$id'");
+    header("location:user.php?ubah=berhasil");
+}
+
+// data level
+$dataLevel = mysqli_query($koneksi, "SELECT * FROM level ORDER BY id DESC");

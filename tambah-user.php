@@ -5,11 +5,33 @@ include 'koneksi.php';
 // jika button simpan ditekan
 if (isset($_POST['simpan'])) {
     $name = $_POST['name'];
-    $id_level = $_POST['id_level'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $id_level = $_POST['id_level'];
 
-    $insert = mysqli_query($koneksi, "INSERT INTO user (name, id_level, email, password) VALUES ('$name','$id_level','$email','$password')");
+    // $_POST: form input name=''
+    // $_GET : url ?param='nilai'
+    // $_FILES: ngambil nilai dari input type file
+    if (!empty($_FILES['foto']['name'])) {
+        $nama_foto = $_FILES['foto']['name'];
+        $ukuran_foto = $_FILES['foto']['size'];
+
+        // png, jpg, jpeg
+        $ext = array('png', 'jpg', 'jpeg');
+        $extFoto = pathinfo($nama_foto, PATHINFO_EXTENSION);
+
+        // JIKA EXTENSI FOTO TIDAK ADA EXT YANG TERDAFTAR DI ARRAY EXT
+        if (!in_array($extFoto, $ext)) {
+            echo "Ext tidak ditemukan";
+            die;
+        } else {
+            // pindahkan gambar dari tmp folder ke folder yang sudah kita buat
+            move_uploaded_file($_FILES['foto']['tmp_name'], 'upload/' . $nama_foto);
+            $insert = mysqli_query($koneksi, "INSERT INTO user (name, email, password, foto, id_level) VALUES ('$name','$email','$password','$nama_foto','$id_level')");
+        }
+    } else {
+        $insert = mysqli_query($koneksi, "INSERT INTO user (name, email, password, id_level) VALUES ('$name','$email','$password','$id_level')");
+    }
 
     header("location:user.php?tambah=berhasil");
 }
@@ -21,8 +43,8 @@ $rowEdit = mysqli_fetch_assoc($queryEdit);
 //jika button edit di klik
 if (isset($_POST['edit'])) {
     $name = $_POST['name'];
-    $id_level = $_POST['id_level'];
     $email = $_POST['email'];
+    $id_level = $_POST['id_level'];
 
     //jika password di isi sama user 
     if ($_POST['password']) {
@@ -31,13 +53,33 @@ if (isset($_POST['edit'])) {
         $password = $rowEdit['password'];
     }
 
-    $update = mysqli_query($koneksi, "UPDATE user SET name='$name',id_level='$id_level',email='$email',password='$password' WHERE id='$id'");
+
+    if (!empty($_FILES['foto']['name'])) {
+        $nama_foto = $_FILES['foto']['name'];
+        $ukuran_foto = $_FILES['foto']['size'];
+
+        // png, jpg, jpeg
+        $ext = array('png', 'jpg', 'jpeg');
+        $extFoto = pathinfo($nama_foto, PATHINFO_EXTENSION);
+
+        // JIKA EXTENSI FOTO TIDAK ADA EXT YANG TERDAFTAR DI ARRAY EXT
+        if (!in_array($extFoto, $ext)) {
+            echo "Ext tidak ditemukan";
+            die;
+        } else {
+            // pindahkan gambar dari tmp folder ke folder yang sudah kita buat
+            move_uploaded_file($_FILES['foto']['tmp_name'], 'upload/' . $nama_foto);
+            $update = mysqli_query($koneksi, "UPDATE user SET name='$name', email='$email', password='$password', id_level='$id_level', foto='$nama_foto' WHERE id='$id'");
+        }
+    } else {
+        $update = mysqli_query($koneksi, "UPDATE user SET name='$name', email='$email', password='$password', id_level='$id_level' WHERE id='$id'");
+    }
+
+
     header("location:user.php?ubah=berhasil");
 }
 
-// data level
 $dataLevel = mysqli_query($koneksi, "SELECT * FROM level ORDER BY id DESC");
-
 ?>
 <!DOCTYPE html>
 
@@ -140,11 +182,19 @@ $dataLevel = mysqli_query($koneksi, "SELECT * FROM level ORDER BY id DESC");
                                             <div class="mb-3 row">
                                                 <div class="col-sm-12">
                                                     <label for="" class="form-label">Password</label>
-                                                    <input type="password"
+                                                    <input type="text"
                                                         name="password"
                                                         placeholder="Masukkan Password Anda"
                                                         class="form-control"
                                                         id="">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <div class="col-sm-12">
+                                                    <label for="" class="form-label">Foto</label>
+                                                    <input type="file"
+                                                        name="foto"
+                                                        value="<?php echo isset($_GET['edit']) ? $rowEdit['foto'] : '' ?>">
                                                 </div>
                                             </div>
                                             <div class="mb-3">
@@ -158,6 +208,7 @@ $dataLevel = mysqli_query($koneksi, "SELECT * FROM level ORDER BY id DESC");
                             </div>
                         </div>
                     </div>
+
                     <!-- / Content -->
 
                     <!-- Footer -->
@@ -203,22 +254,22 @@ $dataLevel = mysqli_query($koneksi, "SELECT * FROM level ORDER BY id DESC");
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="assets/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="assets/assets/vendor/libs/popper/popper.js"></script>
-    <script src="assets/assets/vendor/js/bootstrap.js"></script>
-    <script src="assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/admin/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/admin/assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/admin/assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="assets/assets/vendor/js/menu.js"></script>
+    <script src="../assets/admin/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="assets/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="../assets/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
     <!-- Main JS -->
-    <script src="assets/assets/js/main.js"></script>
+    <script src="../assets/admin/assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="assets/assets/js/dashboards-analytics.js"></script>
+    <script src="../assets/admin/assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
