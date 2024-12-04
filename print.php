@@ -111,7 +111,7 @@ while ($rowDetail = mysqli_fetch_assoc($queryDetail)) {
 
     <div class="struk">
         <div class="struk-header">
-            <h1>f3 CAMIN OFFICIAL</h1>
+            <h1>APP LAUNDRY OFFICIAL</h1>
             <p>Kayu Putih, Pulogadung Jakarta timur</p>
             <p>081113245673</p>
         </div>

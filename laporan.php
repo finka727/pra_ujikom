@@ -121,7 +121,6 @@ if (isset($_GET['delete'])) {
                                                         <td><?php echo $rowDataTransaksi['order_code'] ?></td>
                                                         <td><?php echo $rowDataTransaksi['customer_name'] ?></td>
                                                         <td><?php echo $rowDataTransaksi['order_date'] ?></td>
-                                                        <td><?php echo $rowDataTransaksi['order_end_date'] ?></td>
                                                         <td>
                                                             <?php
                                                             switch ($rowDataTransaksi['order_status']) {
